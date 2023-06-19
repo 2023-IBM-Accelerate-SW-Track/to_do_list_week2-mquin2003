@@ -7,15 +7,24 @@ class AddTodo extends Component {
     super();
     this.state = {
       content: "",
+      preCond: "",
+      acceptCriteria: "",
+      date: "",
     };
   }
   // The handleChange function updates the react state with the new input value provided from the user.
   // "event" is the defined action a user takes. In this case, the event is triggered when the user types something
   // into the text field.
   handleChange = (event) => {
-    this.setState({
-      content: event.target.value,
-    });
+    let inputName = event.target.name;
+    let currentDate = Date().toLocaleString('en-US')
+    if(inputName === "task"){
+      this.setState({content: event.target.value, date: currentDate});
+    }else if(inputName === "preCond"){
+      this.setState({preCond: event.target.value, date: currentDate});
+    }else if(inputName === "acceptCriteria"){
+      this.setState({acceptCriteria: event.target.value, date: currentDate});
+    }
   };
   // The handleSubmit function collects the forms input and puts it into the react state.
   // event.preventDefault() is called to prevents default event behavior like refreshing the browser.
@@ -27,6 +36,9 @@ class AddTodo extends Component {
       this.props.addTodo(this.state);
       this.setState({
         content: "",
+        preCond: "",
+        acceptCriteria: "",
+        date: "",
       });
     }
   };
@@ -41,10 +53,27 @@ class AddTodo extends Component {
       // 4. The value of the text field also should reflect the local state of this component.
       <div>
         <TextField
+          name = "task"
           label="Add New Item"
           variant="outlined"
           onChange={this.handleChange}
           value={this.state.content}
+        />
+        <TextField
+          name = "preCond"
+          style={{ marginLeft: "10px" }}
+          label="Pre-Conditions"
+          variant="outlined"
+          onChange={this.handleChange}
+          value={this.state.preCond}
+        />
+        <TextField
+          name = "acceptCriteria"
+          style={{ marginLeft: "10px" }}
+          label="Acceptance Criteria"
+          variant="outlined"
+          onChange={this.handleChange}
+          value={this.state.acceptCriteria}
         />
         <Button
           style={{ marginLeft: "10px" }}
